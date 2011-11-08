@@ -21,3 +21,8 @@ Options
 * sex - Change image gender. f for female, m for male. Default: 'f'
 * resize - Resize the image to the height of the input field. Default: true
 * imgClass - Class on the image. Default: 'nakedPasswdImage'
+
+Original idea
+-------------
+
+Original idea and [Jquery plugin](http://www.nakedpassword.com/) by [Platform45](http://www.platform45.com/)
