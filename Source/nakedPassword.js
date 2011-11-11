@@ -10,6 +10,8 @@ license: Dual licensed under the MIT or GPL Version 2 licenses.
 authors:
   - Kovács Olivér
 
+version: 0.2
+
 requires:
   - Core/Class.Extras
   - Core/Element.Event
