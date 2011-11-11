@@ -16,6 +16,7 @@ requires:
   - Core/Element.Dimensions
   - Core/Fx.Tween
   - More/Element.Position
+  - More/Assets
 
 provides: [nakedPassword]
 
@@ -28,7 +29,7 @@ provides: [nakedPassword]
 		options : {
 			path		: 'images/',			// Path to the images
 			sex			: 'f',					// Change image sex. f for female, m for male.
-			resize		: 'true',				// Resize the image to the height of the input field
+			resize		: true,					// Resize the image to the height of the input field
 			imgClass	: 'nakedPasswdImage'	// Class on the image
 		},
 		
@@ -65,39 +66,52 @@ provides: [nakedPassword]
 		},
 		
 		build : function () {
-			// Create image
-			this.img = new Element('img', {
-				src: this.o.path + this.o.sex + '0.png',
+			var loader = new Asset.image(this.o.path + this.o.sex + '0.png', {
 				'class': this.o.imgClass,
 				styles: {
 					opacity: 0,
 					visibility: 'hidden'
-				}
-			});
-			
-			// Get dimensions and resize
-			var imgSize			= this.img.measure(function() { return this.getSize(); }),
-				inputHeight		= $(this).getComputedSize().height,
-				ratio			= inputHeight / imgSize.y;
-			
-			// Set image dimensions and inject after input field
-			this.img.set({
-				width:  this.o.resize ? imgSize.x * ratio : imgSize.x,
-				height: this.o.resize ? inputHeight : imgSize.y
-			}).inject($(this), 'after');
-			
-			// Position image to the right of the input field
-			this.img.position({
-				relativeTo: $(this),
-				position: 'centerRight',
-				edge: 'centerRight',
-				offset: {x: -10}
+				},
+				onLoad: function(image) {
+					if (this.o.resize) {
+						// Get dimensions and resize
+						var imgSize			= {x: image.get('width'), y: image.get('height')};
+							inputHeight		= $(this).getComputedSize().height,
+							ratio			= inputHeight / imgSize.y,
+							imgSize.x		= (imgSize.x * ratio).toInt();
+						
+						image.set({
+							width:   imgSize.x,
+							height:  inputHeight,
+							// Set styles for IE
+							styles: {
+								width:   imgSize.x,
+								height:  inputHeight
+							}
+						});
+					}
+					
+					// Inject image
+					image.inject($(this), 'after');
+					
+					// Position image to the right of the input field
+					image.position({
+						relativeTo: $(this),
+						position: 'centerRight',
+						edge: 'centerRight',
+						offset: {x: -10}
+					});
+					
+					this.img = image;
+				}.bind(this)
 			});
 			
 			return this;
 		},
 		
 		update : function () {
+			if (!this.img) return false;
+			
 			this.img.set('src', this.o.path + this.o.sex + this.strength + '.png');
 			this.img.fade('in');
 			

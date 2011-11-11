@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
 		<title>NakedPassword example</title>
@@ -6,19 +7,23 @@
 		<script src="mootools/mootools-more-1.4.0.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../Source/nakedPassword.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
-			label { font-size: 32px; display: block; margin-bottom: 20px; font-weight: bold; }
+			label { font-size: 32px; font-weight: bold; }
 		</style>
 	</head>
 	<body>
-		<label>Naked Password Female<br />
-			<input type="password" id="female" style="font-size: 50px"></label>
+		<p>
+			<label>Naked Password Female<br />
+				<input type="password" id="female" style="font-size: 50px"></label>
+		</p>
 		
-		<label>Naked Password Male<br />
-		<input type="password" id="male" style="font-size: 50px"></label>
+		<p>
+			<label>Naked Password Male<br />
+				<input type="password" id="male" style="font-size: 50px"></label>
+		</p>
 		
 		<script type="text/javascript">
-			$("female").nakedPassword({path: '../images/'});
-			$("male").nakedPassword({path: '../images/', sex: 'm'});
+			$("female").nakedPassword();
+			$("male").nakedPassword({sex: 'm'});
 		</script>
 	</body>
 </html>
