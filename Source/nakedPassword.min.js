@@ -18,6 +18,7 @@ requires:
   - Core/Element.Dimensions
   - Core/Fx.Tween
   - More/Element.Position
+  - More/Element.Measure
   - More/Assets
 
 provides: [nakedPassword]
