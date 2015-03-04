@@ -28,46 +28,46 @@ provides: [nakedPassword]
 (function () {
 	var nakedPassword = new Class({
 		Implements : [Options, Events],
-		
+
 		options : {
 			path		: 'images/',			// Path to the images
 			sex			: 'f',					// Change image sex. f for female, m for male.
 			resize		: true,					// Resize the image to the height of the input field
 			imgClass	: 'nakedPasswdImage'	// Class on the image
 		},
-		
+
 		toElement: function() {
 			return this.element;
 		},
-		
+
 		initialize : function (element, options) {
 			this.setOptions(options);
-			
+
 			this.o = this.options;
-			
+
 			this.element = document.id(element);
 			this.bound = this.trigger.bind(this);
 			this.build().attach();
-			
+
 			return this;
 		},
-		
+
 		attach : function () {
 			$(this).addEvents({
 				'keyup' : this.bound,
 				'blur'  : this.bound
 			});
-			
+
 			return this;
 		},
-		
+
 		trigger : function (event) {
 			this.strength = this._getPasswordStrength(event.target.value);
 			this.update();
-			
+
 			return this;
 		},
-		
+
 		build : function () {
 			var loader = new Asset.image(this.o.path + this.o.sex + '0.png', {
 				'class': this.o.imgClass,
@@ -82,7 +82,7 @@ provides: [nakedPassword]
 							inputHeight		= $(this).getComputedSize().height,
 							ratio			= inputHeight / imgSize.y,
 							imgSize.x		= (imgSize.x * ratio).toInt();
-						
+
 						image.set({
 							width:   imgSize.x,
 							height:  inputHeight,
@@ -93,10 +93,10 @@ provides: [nakedPassword]
 							}
 						});
 					}
-					
+
 					// Inject image
 					image.inject($(this), 'after');
-					
+
 					// Position image to the right of the input field
 					image.position({
 						relativeTo: $(this),
@@ -104,23 +104,23 @@ provides: [nakedPassword]
 						edge: 'centerRight',
 						offset: {x: -10}
 					});
-					
+
 					this.img = image;
 				}.bind(this)
 			});
-			
+
 			return this;
 		},
-		
+
 		update : function () {
 			if (!this.img) return false;
-			
+
 			this.img.set('src', this.o.path + this.o.sex + this.strength + '.png');
 			this.img.fade('in');
-			
+
 			return this;
 		},
-		
+
 		/**
 		 * Naked Password Version 0.2.4
 		 * http://www.nakedpassword.com/
@@ -142,12 +142,12 @@ provides: [nakedPassword]
 				+ +( password.length > 12 );
 		}
 	});
-	
+
 	Element.implement({
-		
+
 		nakedPassword : function (options) {
 			return this.store('nakedpass', new nakedPassword(this, options));
 		}
-		
+
 	});
 }());
