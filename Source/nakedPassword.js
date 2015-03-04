@@ -15,6 +15,7 @@ version: 0.2
 requires:
   - Core/Class.Extras
   - Core/Element.Event
+  - Core/Element.Style
   - Core/Element.Dimensions
   - Core/Fx.Tween
   - More/Element.Position
@@ -31,9 +32,13 @@ provides: [nakedPassword]
 
 		options : {
 			path     : 'images/',         // Path to the images
-			sex      : 'f',               // f | m
+			sex      : 'female',          // female | male
 			resize   : true,              // Resize the image to the height of the input field
-			imgClass : 'nakedPasswdImage' // Class on the image
+			imgClass : 'nakedPasswdImage',// Class on the image
+			imgSize  : {                  // Image dimensions
+				width: 30,
+				height: 28
+			}
 		},
 
 		toElement: function() {
@@ -47,7 +52,12 @@ provides: [nakedPassword]
 
 			this.element = document.id(element);
 			this.bound = this.trigger.bind(this);
+			this.imageSrc = this.o.path + this.o.sex + '.png';
+
 			this.build().attach();
+
+			this.$el = $(document.createElement('span'));
+			this.$el.setStyle('display', 'block');
 
 			return this;
 		},
@@ -69,44 +79,44 @@ provides: [nakedPassword]
 		},
 
 		build : function () {
-			var loader = new Asset.image(this.o.path + this.o.sex + '0.png', {
+			console.log(this.imageSrc);
+			var loader = new Asset.image(this.imageSrc, {
 				'class': this.o.imgClass,
 				styles: {
 					opacity: 0,
 					visibility: 'hidden'
 				},
 				onLoad: function(image) {
-					var imgSize, inputHeight, ratio;
+					this.imageWidth = this.o.imgSize.width;
+					this.imageHeight = this.o.imgSize.height;
+
 					if (this.o.resize) {
 						// Get dimensions and resize
-						imgSize = {x: image.get('width'), y: image.get('height')};
-						inputHeight = $(this).getComputedSize().height;
-						ratio = inputHeight / imgSize.y;
-						imgSize.x = (imgSize.x * ratio).toInt();
+						this.imageHeight = $(this).getComputedSize().height;
+						ratio = this.imageHeight / this.o.imgSize.height;
+						this.imageWidth = parseInt(this.o.imgSize.width * ratio, 10);
 
-						image.set({
-							width:   imgSize.x,
-							height:  inputHeight,
-							// Set styles for IE
-							styles: {
-								width:   imgSize.x,
-								height:  inputHeight
-							}
-						});
+						this.$el.setStyle('backgroundSize', this.imageWidth + 'px ' + this.imageHeight * 5 + 'px');
 					}
 
+					// Set dimensions
+					this.$el.setStyles({
+						width: this.imageWidth,
+						height: this.imageHeight,
+						backgroundImage: 'url(' + this.imageSrc + ')',
+						backgroundRepeat: 'no-repeat'
+					});
+
 					// Inject image
-					image.inject($(this), 'after');
+					this.$el.inject($(this), 'after');
 
 					// Position image to the right of the input field
-					image.position({
+					this.$el.position({
 						relativeTo: $(this),
 						position: 'centerRight',
 						edge: 'centerRight',
 						offset: {x: -10}
 					});
-
-					this.img = image;
 				}.bind(this)
 			});
 
@@ -114,10 +124,8 @@ provides: [nakedPassword]
 		},
 
 		update : function () {
-			if (!this.img) return false;
-
-			this.img.set('src', this.o.path + this.o.sex + this.strength + '.png');
-			this.img.fade('in');
+			this.$el.setStyle('backgroundPosition', '0 ' + -(this.strength * this.imageHeight) + 'px');
+			this.$el.fade('in');
 
 			return this;
 		},
