@@ -30,10 +30,10 @@ provides: [nakedPassword]
 		Implements : [Options, Events],
 
 		options : {
-			path		: 'images/',			// Path to the images
-			sex			: 'f',					// Change image sex. f for female, m for male.
-			resize		: true,					// Resize the image to the height of the input field
-			imgClass	: 'nakedPasswdImage'	// Class on the image
+			path     : 'images/',         // Path to the images
+			sex      : 'f',               // f | m
+			resize   : true,              // Resize the image to the height of the input field
+			imgClass : 'nakedPasswdImage' // Class on the image
 		},
 
 		toElement: function() {
@@ -54,8 +54,8 @@ provides: [nakedPassword]
 
 		attach : function () {
 			$(this).addEvents({
-				'keyup' : this.bound,
-				'blur'  : this.bound
+				'keyup': this.bound,
+				'blur': this.bound
 			});
 
 			return this;
@@ -76,12 +76,13 @@ provides: [nakedPassword]
 					visibility: 'hidden'
 				},
 				onLoad: function(image) {
+					var imgSize, inputHeight, ratio;
 					if (this.o.resize) {
 						// Get dimensions and resize
-						var imgSize			= {x: image.get('width'), y: image.get('height')};
-							inputHeight		= $(this).getComputedSize().height,
-							ratio			= inputHeight / imgSize.y,
-							imgSize.x		= (imgSize.x * ratio).toInt();
+						imgSize = {x: image.get('width'), y: image.get('height')};
+						inputHeight = $(this).getComputedSize().height;
+						ratio = inputHeight / imgSize.y;
+						imgSize.x = (imgSize.x * ratio).toInt();
 
 						image.set({
 							width:   imgSize.x,
