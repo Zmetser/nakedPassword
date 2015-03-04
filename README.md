@@ -10,17 +10,37 @@ How to use
 
 All you need to do is to attach *nakedPassword()* to a password filed.
 
-	$$("input[type=password]").nakedPassword();
+```javascript
+$$("input[type=password]").nakedPassword();
+```
 
 It can handle single, or a collection of elements.
 
 Options
 -------
 
-* path - Path to the images. Default: 'images/'
-* sex - Change image gender. f for female, m for male. Default: 'f'
-* resize - Resize the image to the height of the input field. Default: true
-* imgClass - Class on the image. Default: 'nakedPasswdImage'
+`path` : `String` <= `"images/"`
+
+Path to the images.
+
+`sex` : `String` <= `"female"`
+
+Change image gender.
+
+An image with this name should exists under the `path`.
+
+`resize` : `Boolean` <= `true`
+
+Resize the image to the height of the input field.
+
+`imgClass` : `String` <= `"nakedPasswdImage"`
+
+Class on the image.
+
+`imgSize` : `Object` <= `{width: 30, height: 28}`
+
+Size of an image on the sprite.
+
 
 Original idea
 -------------
