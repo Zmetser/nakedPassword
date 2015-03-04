@@ -1,0 +1,30 @@
+{
+  "name": "nakedPassword",
+  "version": "0.3",
+  "homepage": "https://github.com/Zmetser/nakedPassword",
+  "authors": [
+    "Oliver Kovacs <zmetser@gmail.com>"
+  ],
+  "description": "Visualize password strength with a stripping man or women.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "mootools",
+    "password-strength",
+    "security",
+    "naked"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mootools": "~1.5.1",
+    "mootools-more": "~1.5.1"
+  }
+}

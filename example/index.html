@@ -3,8 +3,10 @@
 	<head>
 		<title>NakedPassword example</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<script src="mootools/mootools-core-1.4.1.js" type="text/javascript" charset="utf-8"></script>
-		<script src="mootools/mootools-more-1.4.0.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../bower_components/mootools/dist/mootools-core-compat.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../bower_components/mootools-more/Source/Element/Element.Position.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../bower_components/mootools-more/Source/Element/Element.Measure.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../bower_components/mootools-more/Source/Utilities/Assets.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../Source/nakedPassword.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			label { font-size: 32px; font-weight: bold; }
@@ -15,15 +17,15 @@
 			<label>Naked Password Female<br />
 				<input type="password" id="female" style="font-size: 50px"></label>
 		</p>
-		
+
 		<p>
 			<label>Naked Password Male<br />
 				<input type="password" id="male" style="font-size: 50px"></label>
 		</p>
-		
+
 		<script type="text/javascript">
-			$("female").nakedPassword();
-			$("male").nakedPassword({sex: 'm'});
+			$("female").nakedPassword({path: '../images/'});
+			$("male").nakedPassword({path: '../images/', sex: 'm'});
 		</script>
 	</body>
 </html>
